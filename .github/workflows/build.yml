@@ -1,0 +1,66 @@
+# Builds WinDock on a clean Windows machine in GitHub's cloud, then tests the installer there:
+# silent install -> check files, shortcut, autostart and Installed-apps entry -> uninstall -> check they are gone.
+# A pushed tag like v0.2.0 also publishes a GitHub Release with the setup, the portable zip and checksums.
+name: build
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build release files
+        shell: cmd
+        run: build-release.bat
+
+      - name: Test install and uninstall
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $setup = Get-ChildItem dist\WinDock-Setup-*.exe | Select-Object -First 1
+          $p = Start-Process $setup.FullName -ArgumentList '/S','/nostart' -Wait -PassThru
+          if ($p.ExitCode -ne 0) { throw "setup exit code $($p.ExitCode)" }
+
+          $dir = Join-Path $env:LOCALAPPDATA 'WinDock'
+          $lnk = Join-Path ([Environment]::GetFolderPath('Programs')) 'WinDock.lnk'
+          $run = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run'
+          $uninst = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\WinDock'
+          if (-not (Test-Path "$dir\WinDock.exe")) { throw 'WinDock.exe was not installed' }
+          if (-not (Test-Path $lnk)) { throw 'Start Menu shortcut missing' }
+          if (-not (Get-ItemProperty $run).WinDock) { throw 'start-at-sign-in entry missing' }
+          $u = Get-ItemProperty $uninst
+          if ($u.DisplayName -ne 'WinDock' -or -not $u.UninstallString) { throw 'Installed-apps entry missing' }
+          "installed OK: version $($u.DisplayVersion)"
+
+          $p = Start-Process "$dir\WinDock.exe" -ArgumentList '/uninstall' -Wait -PassThru
+          if ($p.ExitCode -ne 0) { throw "uninstall exit code $($p.ExitCode)" }
+          Start-Sleep -Seconds 5
+          if (Test-Path $dir) { throw 'install folder was not removed' }
+          if (Test-Path $lnk) { throw 'shortcut was not removed' }
+          if ((Get-ItemProperty $run).WinDock) { throw 'autostart was not removed' }
+          if (Test-Path $uninst) { throw 'Installed-apps entry was not removed' }
+          'uninstalled OK'
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WinDock-dist
+          path: dist/*
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $notes = "See CHANGELOG.md. Windows may show a SmartScreen warning because the app is not code-signed: choose More info > Run anyway."
+          gh release create $env:GITHUB_REF_NAME (Get-ChildItem dist\*).FullName --title "WinDock $($env:GITHUB_REF_NAME)" --notes $notes

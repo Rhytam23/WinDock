@@ -1,0 +1,11 @@
+*.exe
+*.pdb
+bin/
+obj/
+dist/
+*.log
+
+# promo video: keep the scripts, not the rendered output
+promo/*.mp4
+promo/*.wav
+promo/stills/
