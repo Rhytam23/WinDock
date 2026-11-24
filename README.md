@@ -7,7 +7,7 @@
 WinDock replaces the Windows taskbar with a translucent dock at the bottom of the screen. Quit it and the taskbar
 comes back exactly as it was.
 
-**[⬇ Download the latest version](../../releases/latest)** · [What it does](#what-it-does-today) ·
+**[⬇ Download the latest version](../../releases/latest)** · [Website](https://rhytam23.github.io/WinDock/) · [What it does](#what-it-does-today) ·
 [Install](#install) · [FAQ](#faq) · [Roadmap](#roadmap)
 
 <p align="center"><img src="docs/demo.gif" width="300" alt="Animation: magnification, genie minimise, window previews, folder stacks and drag to remove"></p>

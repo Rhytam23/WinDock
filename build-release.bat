@@ -30,6 +30,8 @@ set ICON=
 if exist obj\windock.ico set ICON=/win32icon:obj\windock.ico
 "%CSC%" /nologo /target:winexe /platform:anycpu /optimize+ /out:dist\WinDock-Setup-%VER%.exe /win32manifest:installer\setup.manifest %ICON% /resource:bin\WinDock.exe,WinDock.exe /r:System.dll /r:System.Drawing.dll /r:System.Windows.Forms.dll installer\Setup.cs obj\SetupVersion.cs || exit /b 1
 echo Built dist\WinDock-Setup-%VER%.exe
+rem the same file without a version number, so ".../releases/latest/download/WinDock-Setup.exe" always works
+copy /y dist\WinDock-Setup-%VER%.exe dist\WinDock-Setup.exe >nul
 
 set STAGE=obj\portable\WinDock-%VER%
 if exist obj\portable rmdir /s /q obj\portable
