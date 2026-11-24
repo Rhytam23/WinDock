@@ -214,7 +214,7 @@ p { margin: 0 0 1rem; max-width: 40em; }
 .mini-dock i:nth-child(3) { background: linear-gradient(#7fc4ff, #1e78e6); }
 .mini-dock i:nth-child(5) { background: linear-gradient(#ffe48a, #ffc93c); }
 
-.notes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.notes { display: grid; gap: 1rem; }
 @media (max-width: 1000px) { /* one card per row: picture beside the text */
   .howto { grid-template-columns: 1fr; }
   .step { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); column-gap: 1.4rem; align-content: center; }
