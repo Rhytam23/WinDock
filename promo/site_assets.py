@@ -15,11 +15,11 @@ for name, img in A.icons.items():
     img.resize((192, 192), Image.LANCZOS).save(os.path.join(OUT, "icons", name.lower() + ".png"), optimize=True)
 
 # feature stills: (time in the reel, crop box) - crops stay below the captions
-STILLS = {
-    "genie": (10.7, (0, 640, 1080, 1700)),
-    "previews": (14.5, (0, 1120, 1080, 1700)),
-    "stacks": (18.2, (300, 1020, 1080, 1700)),
-    "settings": (29.0, (40, 440, 1040, 1700)),
+STILLS = {  # all 4:3, framed on the subject
+    "genie": (10.7, (0, 845, 1080, 1655)),
+    "previews": (14.5, (0, 1250, 600, 1700)),
+    "stacks": (18.2, (400, 1060, 1080, 1570)),
+    "settings": (29.0, (40, 420, 1040, 1170)),
 }
 for name, (t, box) in STILLS.items():
     R.render(t, A).crop(box).save(os.path.join(OUT, name + ".webp"), quality=84, method=6)

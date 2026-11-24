@@ -8,7 +8,7 @@
   <meta property="og:title" content="WinDock: a Mac-style dock for Windows 11">
   <meta property="og:description" content="Free and open source. Magnification, genie minimise, window previews, folder stacks. No admin rights, no telemetry.">
   <meta property="og:image" content="https://rhytam23.github.io/WinDock/media/reel-poster.webp">
-  <meta name="theme-color" content="#2b2266">
+  <meta name="theme-color" content="#f3eefb">
   <link rel="icon" href="media/favicon.png">
   <link rel="apple-touch-icon" href="media/apple-touch-icon.png">
   <link rel="stylesheet" href="style.css">
@@ -17,129 +17,112 @@
 <body>
   <a class="skip" href="#main">Skip to content</a>
 
-  <header class="hero">
-    <nav class="bar" aria-label="Site">
-      <a class="brand" href="./"><img src="media/favicon.png" alt="" width="28" height="28"> WinDock</a>
-      <a class="bar-link" href="https://github.com/Rhytam23/WinDock">Source on GitHub</a>
-    </nav>
-
-    <div class="hero-copy">
-      <h1>A Mac-style dock <br>for Windows&nbsp;11</h1>
-      <p class="lead">WinDock replaces the taskbar with a dock that magnifies as you move, bounces when an app opens
-        and slides away when you don't need it. Quit it, and your taskbar is back exactly as it was.</p>
-      <div class="cta">
-        <a class="button" href="https://github.com/Rhytam23/WinDock/releases/latest/download/WinDock-Setup.exe">Download for Windows</a>
-        <p class="cta-note">Version 0.1.0 for Windows 11. Free, 250&nbsp;KB, no admin rights.<br>
-          <a href="https://github.com/Rhytam23/WinDock/releases/latest">Portable zip and checksums</a></p>
-      </div>
-    </div>
-
-    <div class="desk" aria-label="Try the dock">
-      <p class="hint" id="hint"><span class="hint-mouse">Move your pointer along the dock. Click an icon.</span><span class="hint-touch">Tap an icon to open it.</span></p>
-      <div class="dock" id="dock" role="toolbar" aria-label="Demo dock">
-        <button class="app running" data-name="Files"><img src="media/icons/files.png" alt=""></button>
-        <button class="app running" data-name="Browser"><img src="media/icons/browser.png" alt=""></button>
-        <button class="app" data-name="Mail"><img src="media/icons/mail.png" alt=""></button>
-        <button class="app" data-name="Music"><img src="media/icons/music.png" alt=""></button>
-        <button class="app extra" data-name="Photos"><img src="media/icons/photos.png" alt=""></button>
-        <button class="app extra" data-name="Notes"><img src="media/icons/notes.png" alt=""></button>
-        <button class="app extra" data-name="Terminal"><img src="media/icons/terminal.png" alt=""></button>
-        <button class="app extra" data-name="Calendar"><img src="media/icons/calendar.png" alt=""></button>
-        <button class="app" data-name="Settings"><img src="media/icons/settings.png" alt=""></button>
-        <span class="divider" aria-hidden="true"></span>
-        <button class="app" data-name="Downloads"><img src="media/icons/downloads.png" alt=""></button>
-        <button class="app" data-name="Trash"><img src="media/icons/trash.png" alt=""></button>
-      </div>
-    </div>
+  <header class="top" id="top">
+    <a class="brand" href="#top"><img src="media/favicon.png" alt="" width="26" height="26"> WinDock</a>
+    <a class="top-link" href="https://github.com/Rhytam23/WinDock">Source on GitHub</a>
   </header>
 
   <main id="main">
-    <section class="watch" aria-labelledby="watch-title">
-      <div class="watch-copy">
-        <h2 id="watch-title">Everything it does, in 34 seconds</h2>
-        <p>Magnification, the genie, window previews, folder stacks, removing an icon, auto-hide and Settings.
-          Turn the sound on for the soundtrack.</p>
-        <p class="small">An illustration drawn from code, not a screen recording.</p>
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">Give Windows&nbsp;11 <br>a&nbsp;dock.</h1>
+      <p class="lead">WinDock swaps the taskbar for a Mac-style dock that magnifies as you glide, bounces when apps open
+        and stacks your folders. Quit it and your taskbar comes straight back.</p>
+      <a class="button" href="https://github.com/Rhytam23/WinDock/releases/latest/download/WinDock-Setup.exe">Download for Windows</a>
+      <p class="fine">Version 0.1.0, 250&nbsp;KB, free and open source. No admin rights needed.<br>
+        <a href="https://github.com/Rhytam23/WinDock/releases/latest">Portable zip and checksums</a></p>
+      <p class="try"><span class="try-mouse">The dock at the bottom of this page works like WinDock. Glide over it.</span><span class="try-touch">The dock at the bottom of this page is the menu. Tap an icon.</span></p>
+    </section>
+
+    <section class="window w-watch" id="watch" aria-labelledby="watch-title">
+      <div class="titlebar" aria-hidden="true"><span>WinDock in 34 seconds</span><i class="ctl"></i></div>
+      <div class="pane watch">
+        <video class="reel" controls playsinline preload="none" poster="media/reel-poster.webp" width="1080" height="1920" aria-describedby="watch-note">
+          <source src="media/windock-reel.mp4" type="video/mp4">
+        </video>
+        <div>
+          <h2 id="watch-title">See all of it in half a minute</h2>
+          <p>Magnification, the genie, window previews, folder stacks, dragging an icon away, auto-hide and Settings,
+            set to its own soundtrack.</p>
+          <p class="fine" id="watch-note">An illustration drawn from code, not a screen recording.</p>
+        </div>
       </div>
-      <video class="reel" controls playsinline preload="none" poster="media/reel-poster.webp" width="1080" height="1920">
-        <source src="media/windock-reel.mp4" type="video/mp4">
-      </video>
     </section>
 
-    <section class="features" aria-label="Features">
-      <article class="feature">
-        <div class="feature-copy">
-          <h2>Minimise with a genie</h2>
-          <p>Click a running app and its window flows down into its icon. Click again and it comes back the same way.</p>
+    <section class="window w-features" id="features" aria-labelledby="features-title">
+      <div class="titlebar" aria-hidden="true"><span>What it does</span><i class="ctl"></i></div>
+      <div class="pane">
+        <h2 id="features-title">Everything you'd reach for on a Mac</h2>
+        <div class="grid">
+          <figure class="feat">
+            <img src="media/genie.webp" alt="A music player window narrowing as it flows into its dock icon" width="1080" height="810" loading="lazy">
+            <figcaption><b>Genie minimise.</b> Click a running app and its window pours into its icon. Click again to bring it back.</figcaption>
+          </figure>
+          <figure class="feat">
+            <img src="media/previews.webp" alt="Two browser window previews above the browser icon" width="600" height="450" loading="lazy">
+            <figcaption><b>Window previews.</b> Rest on an app to see its windows live, then pick the one you want.</figcaption>
+          </figure>
+          <figure class="feat">
+            <img src="media/stacks.webp" alt="The Downloads folder open as a grid of files above the dock" width="680" height="510" loading="lazy">
+            <figcaption><b>Folder stacks.</b> Open a pinned folder as a fan, a grid or a list, and open any file in one click.</figcaption>
+          </figure>
+          <figure class="feat">
+            <img src="media/settings.webp" alt="WinDock Settings in dark mode with the dock size slider" width="1000" height="750" loading="lazy">
+            <figcaption><b>Live settings.</b> Drag the size slider and the dock grows as you drag. Dark mode follows at once.</figcaption>
+          </figure>
         </div>
-        <img src="media/genie.webp" alt="A music player window narrowing as it flows into its dock icon" width="1080" height="1060" loading="lazy">
-      </article>
-      <article class="feature">
-        <div class="feature-copy">
-          <h2>See every window before you switch</h2>
-          <p>Rest on a running app for half a second to see live previews of its windows, then click the one you want.</p>
-        </div>
-        <img src="media/previews.webp" alt="Two browser window previews above the browser icon in the dock" width="1080" height="580" loading="lazy">
-      </article>
-      <article class="feature">
-        <div class="feature-copy">
-          <h2>Folders open as stacks</h2>
-          <p>Pin a folder and open it as a fan, a grid or a list. Each file opens with one click, and the whole folder is
-            one more click away in File Explorer.</p>
-        </div>
-        <img src="media/stacks.webp" alt="The Downloads folder open as a grid of six files above the dock" width="780" height="680" loading="lazy">
-      </article>
-      <article class="feature">
-        <div class="feature-copy">
-          <h2>Settings that change it live</h2>
-          <p>Drag the size slider and the dock grows while you drag. Switch to dark and the dock follows. Settings are
-            also a plain text file you can edit by hand.</p>
-        </div>
-        <img src="media/settings.webp" alt="WinDock Settings in dark mode with the dock size slider and appearance options" width="1000" height="1260" loading="lazy">
-      </article>
+        <ul class="more">
+          <li>Drag icons to reorder, or off the dock to remove them</li>
+          <li>Trash that shows when it's full</li>
+          <li>Pinned websites with their own icons</li>
+          <li>Auto-hide at the bottom edge</li>
+          <li>Maximised windows stop above the dock</li>
+          <li>About 0.05% CPU when idle, 13&nbsp;MB of memory</li>
+        </ul>
+      </div>
     </section>
 
-    <section class="also" aria-labelledby="also-title">
-      <h2 id="also-title">Also in this version</h2>
-      <ul>
-        <li>Drag icons to reorder them, or drag one off the dock to remove it.</li>
-        <li>Trash shows when it's full. Right-click to empty it.</li>
-        <li>Pin websites. They open in your browser and show the site's icon.</li>
-        <li>Auto-hide: the dock slides away and returns when you touch the bottom edge.</li>
-        <li>Maximised windows stop above the dock instead of hiding under it.</li>
-        <li>Light on your PC: about 0.05% CPU when idle and 13&nbsp;MB of memory.</li>
-      </ul>
+    <section class="window w-install" id="install" aria-labelledby="install-title">
+      <div class="titlebar" aria-hidden="true"><span>WinDock Setup</span><i class="ctl"></i></div>
+      <div class="pane">
+        <h2 id="install-title">Install in a minute</h2>
+        <ol class="steps">
+          <li><a href="https://github.com/Rhytam23/WinDock/releases/latest/download/WinDock-Setup.exe">Download WinDock-Setup.exe</a> and open it.</li>
+          <li>If Windows says <q>Windows protected your PC</q>, choose <b>More info</b>, then <b>Run anyway</b>.
+            WinDock isn't code-signed yet, so SmartScreen doesn't recognise it.</li>
+          <li>Choose <b>Install</b>. The dock appears at the bottom of your screen.</li>
+        </ol>
+        <p>Changed your mind? Uninstall it from <b>Settings &rsaquo; Apps &rsaquo; Installed apps</b> and your taskbar returns.</p>
+        <p class="fine">Smart App Control blocks every unsigned app, WinDock included. You'll find it under Windows Security &rsaquo; App &amp; browser control.</p>
+      </div>
     </section>
 
-    <section class="install" aria-labelledby="install-title">
-      <h2 id="install-title">Installing</h2>
-      <ol>
-        <li><a href="https://github.com/Rhytam23/WinDock/releases/latest/download/WinDock-Setup.exe">Download WinDock-Setup.exe</a> and open it.</li>
-        <li>If Windows says <q>Windows protected your PC</q>, choose <b>More info</b>, then <b>Run anyway</b>. WinDock isn't
-          code-signed yet, so SmartScreen doesn't recognise it.</li>
-        <li>Choose <b>Install</b>. The dock appears at the bottom of your screen.</li>
-      </ol>
-      <p>To remove it, open <b>Settings › Apps › Installed apps</b> and uninstall WinDock. Your taskbar comes back.</p>
-      <p class="small">If Smart App Control is on, Windows blocks every unsigned app, including WinDock. Check under
-        Windows Security › App &amp; browser control.</p>
-    </section>
-
-    <section class="trust" aria-labelledby="trust-title">
-      <h2 id="trust-title">Yours, not watched</h2>
-      <p>WinDock has no telemetry and no account. It only goes online to fetch a website's icon when you pin that
-        website. It runs for your Windows account alone and changes nothing outside it.</p>
-      <p>It's free and open source under the MIT licence. Read the code, report a bug or suggest an idea
-        <a href="https://github.com/Rhytam23/WinDock">on GitHub</a>.</p>
+    <section class="window w-privacy" id="privacy" aria-labelledby="privacy-title">
+      <div class="titlebar" aria-hidden="true"><span>Privacy</span><i class="ctl"></i></div>
+      <div class="pane">
+        <h2 id="privacy-title">Nobody is watching</h2>
+        <p>No telemetry, no account, no ads. WinDock only goes online to fetch a website's icon when you pin that
+          website, and it changes nothing outside your own Windows account.</p>
+        <p>It's free and open source under the MIT licence. Read the code, report a bug or suggest an idea
+          <a href="https://github.com/Rhytam23/WinDock">on GitHub</a>.</p>
+      </div>
     </section>
   </main>
 
   <footer class="foot">
-    <p><a href="https://github.com/Rhytam23/WinDock">GitHub</a>
-      <a href="https://github.com/Rhytam23/WinDock/releases">Releases</a>
-      <a href="https://github.com/Rhytam23/WinDock/issues">Report a bug</a>
-      <a href="https://github.com/Rhytam23/WinDock/blob/main/LICENSE">MIT licence</a></p>
-    <p class="small">WinDock is an independent project, not affiliated with or endorsed by Apple or Microsoft.
-      Mac is a trademark of Apple Inc. Windows is a trademark of Microsoft Corporation.</p>
+    <p class="fine">WinDock is an independent project, not affiliated with or endorsed by Apple or Microsoft. Mac is a
+      trademark of Apple Inc. Windows is a trademark of Microsoft Corporation.
+      <a href="https://github.com/Rhytam23/WinDock/blob/main/LICENSE">MIT licence</a>.</p>
   </footer>
+
+  <nav class="dock" id="dock" aria-label="Page sections">
+    <a class="app" href="#top" data-name="Top" data-section="top"><img src="media/apple-touch-icon.png" alt=""></a>
+    <a class="app" href="#watch" data-name="Watch" data-section="watch"><img src="media/icons/music.png" alt=""></a>
+    <a class="app" href="#features" data-name="Features" data-section="features"><img src="media/icons/files.png" alt=""></a>
+    <a class="app" href="#install" data-name="Install" data-section="install"><img src="media/icons/settings.png" alt=""></a>
+    <a class="app" href="#privacy" data-name="Privacy" data-section="privacy"><img src="media/icons/notes.png" alt=""></a>
+    <span class="divider" aria-hidden="true"></span>
+    <a class="app" href="https://github.com/Rhytam23/WinDock" data-name="Source code"><img src="media/icons/browser.png" alt=""></a>
+    <a class="app" href="https://github.com/Rhytam23/WinDock/releases/latest/download/WinDock-Setup.exe" data-name="Download"><img src="media/icons/downloads.png" alt=""></a>
+  </nav>
 </body>
 </html>
