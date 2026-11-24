@@ -148,40 +148,65 @@ def soft_shadow(w, h, r, blur=22, alpha=120, off=14):
 
 # ---------------------------------------------------------------- wallpaper
 
-def make_wallpaper():
-    """An original Windows 11-style wallpaper: deep blue with a soft bloom of translucent petals."""
+def make_wallpaper(seed=7):
+    """An original Windows 11-style bloom: glossy, curved petals over deep blue."""
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
-    g = np.clip(xx / W * 0.45 + yy / H * 0.55, 0, 1)[..., None]
-    img = np.array([6, 20, 66]) * (1 - g) + np.array([28, 86, 200]) * g
-    cx, cy = W * 0.56, H * 0.5
-    glow = np.exp(-(((xx - cx) ** 2 + (yy - cy) ** 2) / (2 * (min(W, H) * 0.32) ** 2)))[..., None]
-    img = img * (1 - glow * 0.55) + np.array([120, 180, 255]) * glow * 0.55
-    base = Image.fromarray(np.clip(img, 0, 255).astype(np.uint8), "RGB").convert("RGBA")
+    m = float(min(W, H))
+    cx, cy = W * 0.5, H * 0.56
 
-    m = min(W, H)
-    pw, ph = int(m * 0.62), int(m * 0.24)
-    grad = np.linspace(0, 1, pw)[None, :, None]
-    col = (np.array([30, 110, 255]) * (1 - grad) + np.array([205, 235, 255]) * grad).astype(np.uint8)
-    petal_rgb = Image.fromarray(np.repeat(col, ph, 0), "RGB")
-    mask = Image.new("L", (pw, ph), 0)
-    ImageDraw.Draw(mask).ellipse((0, 0, pw - 1, ph - 1), fill=255)
-    fade = Image.fromarray((np.linspace(0.25, 1.0, pw)[None, :] * np.ones((ph, 1)) * 255).astype(np.uint8), "L")
-    mask = Image.fromarray((np.array(mask, np.float32) * np.array(fade, np.float32) / 255 * 0.62).astype(np.uint8), "L")
-    layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    for k in range(8):
-        p = petal_rgb.copy(); p.putalpha(mask)
-        canvas = Image.new("RGBA", (pw * 2, pw * 2), (0, 0, 0, 0))
-        canvas.paste(p, (pw, pw - ph // 2), p)            # petal grows out from the centre
-        canvas = canvas.rotate(-20 + k * 45 + (k % 2) * 8, resample=Image.BICUBIC, center=(pw, pw))
-        layer.alpha_composite(canvas, (int(cx - pw), int(cy - pw)))
-    layer = layer.filter(ImageFilter.GaussianBlur(m * 0.006))
-    base.alpha_composite(layer)
-    soft = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    ImageDraw.Draw(soft).ellipse((cx - m * 0.08, cy - m * 0.08, cx + m * 0.08, cy + m * 0.08), fill=(230, 245, 255, 150))
-    base.alpha_composite(soft.filter(ImageFilter.GaussianBlur(m * 0.05)))
-    arr = np.array(base).astype(np.float32)
-    arr[..., :3] += np.random.default_rng(7).normal(0, 1.6, (H, W, 1))
-    return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), "RGBA")
+    # background: deep navy at the corners, brighter blue behind the flower
+    r = np.sqrt(((xx - cx) / (W * 0.75)) ** 2 + ((yy - cy) / (H * 0.95)) ** 2)
+    g = np.clip(r, 0, 1)[..., None] ** 0.9
+    img = np.array([22, 84, 214], np.float32) * (1 - g) + np.array([3, 12, 52], np.float32) * g
+    glow = np.exp(-((xx - cx) ** 2 + (yy - cy) ** 2) / (2 * (m * 0.30) ** 2))[..., None]
+    img = img + np.array([40, 110, 230], np.float32) * glow * 0.55
+
+    dark = np.array([8, 40, 140], np.float32)
+    mid = np.array([30, 110, 240], np.float32)
+    lite = np.array([150, 210, 255], np.float32)
+    tip = np.array([225, 242, 255], np.float32)
+
+    L = m * 0.56            # petal length
+    Wd = m * 0.15           # petal half-width at its widest
+    n = 7
+    for k in range(n):
+        a = np.deg2rad(-90 + k * 360 / n + 8)
+        dx, dy = xx - cx, yy - cy
+        u = dx * np.cos(a) + dy * np.sin(a)
+        v = -dx * np.sin(a) + dy * np.cos(a)
+        t = u / L
+        tc = np.clip(t, 0, 1)
+        bend = Wd * 0.9 * np.sin(np.pi * tc * 0.9) * tc          # petals sweep sideways: a gentle swirl
+        hw = Wd * np.sin(np.pi * tc) ** 0.75 * (0.55 + 0.45 * np.sin(np.pi * tc * 0.8))
+        hw = np.maximum(hw, 1e-3)
+        s = (v - bend) / hw                                        # -1 .. 1 across the petal
+        inside = (t > 0) & (t < 1)
+        edge = hw - np.abs(v - bend)
+        a_mask = np.clip(edge / 1.6, 0, 1) * inside
+        a_mask *= np.clip(t * 6, 0, 1)                             # fade into the centre
+
+        # shading: one edge catches light, the other folds into shadow
+        f = np.clip((s + 1) / 2, 0, 1)
+        col = (dark[None, None] * (1 - f[..., None]) ** 1.6
+               + mid[None, None] * (1 - np.abs(f[..., None] - 0.55) * 1.6).clip(0, 1)
+               + lite[None, None] * f[..., None] ** 2.2)
+        rim = np.exp(-((1 - np.clip(s, -1, 1)) * hw / (m * 0.006)) ** 2)            # thin bright rim on the lit edge
+        col = col + (tip - col) * (rim[..., None] * 0.85)
+        col = col + (tip - col) * (np.clip(tc - 0.55, 0, 1)[..., None] * 0.5 * f[..., None])
+        alpha = a_mask * (0.72 + 0.14 * f)
+
+        # soft shadow cast onto what's beneath, then the petal itself
+        sh = Image.fromarray((a_mask * 255).astype(np.uint8)).filter(ImageFilter.GaussianBlur(m * 0.02))
+        sh = np.array(sh, np.float32)[..., None] / 255
+        img = img * (1 - sh * 0.35)
+        img = img * (1 - alpha[..., None]) + col * alpha[..., None]
+
+    core = np.exp(-((xx - cx) ** 2 + (yy - cy) ** 2) / (2 * (m * 0.05) ** 2))[..., None]
+    img = img + (np.array([235, 246, 255], np.float32) - img) * core * 0.6
+    vig = np.clip(1 - 0.35 * (((xx - W / 2) / W) ** 2 + ((yy - H / 2) / H) ** 2) * 2, 0, 1)[..., None]
+    img = img * vig
+    img += np.random.default_rng(seed).normal(0, 1.4, (H, W, 1))
+    return Image.fromarray(np.clip(img, 0, 255).astype(np.uint8), "RGB").convert("RGBA")
 
 
 def draw_taskbar(fr, A, t):

@@ -85,6 +85,20 @@
     wins.forEach(w => w.classList.add("open"));
   }
 
+  // ---------- the film: a clean poster with one play button; the browser's controls appear once it plays ----------
+  const film = document.querySelector(".film");
+  const play = document.querySelector(".player .play");
+  if (film && play) {
+    film.removeAttribute("controls");
+    play.hidden = false;
+    play.addEventListener("click", () => {
+      play.hidden = true;
+      film.setAttribute("controls", "");
+      const p = film.play(); if (p && p.catch) p.catch(() => {});
+      film.focus();
+    });
+  }
+
   // ---------- feature clips: play while visible; with reduced motion, show controls instead ----------
   const clips = document.querySelectorAll(".clip");
   if (reduce.matches) {

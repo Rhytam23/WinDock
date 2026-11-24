@@ -147,6 +147,18 @@ p { margin: 0 0 1rem; max-width: 40em; }
 .watch-head { margin-bottom: 1.6rem; }
 .watch-head p { max-width: 46em; }
 .film { width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 10px; background: #0b1d55; box-shadow: 0 24px 50px -22px rgba(10, 20, 80, 0.6); }
+.player { position: relative; }
+.film { display: block; }
+/* until it plays: a clean poster with one play button instead of the browser's control bar over the dock */
+.play { position: absolute; inset: 0; display: grid; place-items: center; width: 100%; border: 0; border-radius: 10px; padding: 0;
+  background: radial-gradient(closest-side, rgba(4, 16, 60, 0.28), transparent); color: #fff; cursor: pointer; }
+.play svg { box-sizing: content-box; padding: 26px 24px 26px 28px; border-radius: 50%; background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.45); box-shadow: 0 12px 34px rgba(0, 10, 50, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); transition: transform 0.2s ease, background-color 0.2s ease; }
+.play span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.play:hover svg { transform: scale(1.08); background-color: rgba(255, 255, 255, 0.3); }
+.play:focus-visible { outline: none; }
+.play:focus-visible svg { outline: 3px solid #fff; outline-offset: 4px; }
 
 .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.25rem, 3vw, 2.25rem); margin: 1.75rem 0 2.25rem; }
 .feat { margin: 0; }
