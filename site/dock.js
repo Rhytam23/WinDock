@@ -1,7 +1,7 @@
 // WinDock site behaviour:
 // - the opening moment (taskbar slides away, dock rises, icons pop in), started by adding "go" to <html>
 // - the dock menu: magnification near the pointer (WinDock's bell curve), bounce on click, dot under the section in view
-// - windows "open" as you scroll to them; feature clips play only while on screen
+// - sections rise in as you scroll to them; feature clips play only while on screen
 (function () {
   const root = document.documentElement;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)");
@@ -74,8 +74,8 @@
     ["top", "watch", "features", "install", "privacy"].forEach(id => { const el = document.getElementById(id); if (el) io.observe(el); });
   }
 
-  // ---------- windows open as you reach them ----------
-  const wins = document.querySelectorAll(".window");
+  // ---------- sections rise in as you reach them ----------
+  const wins = document.querySelectorAll(".section");
   if ("IntersectionObserver" in window) {
     const opener = new IntersectionObserver(entries => entries.forEach(e => {
       if (e.isIntersecting) { e.target.classList.add("open"); opener.unobserve(e.target); }

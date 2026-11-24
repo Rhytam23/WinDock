@@ -50,7 +50,7 @@
       <p class="try rise" style="--d: 1.7s"><span class="try-mouse">The dock at the bottom of this page works like WinDock too. Glide over it.</span><span class="try-touch">The dock at the bottom of this page is the menu. Tap an icon.</span></p>
     </section>
 
-    <section class="window w-watch" id="watch" aria-labelledby="watch-title">
+    <section class="section w-watch" id="watch" aria-labelledby="watch-title">
       <div class="pane">
         <div class="watch-head">
           <h2 id="watch-title">See all of it in half a minute</h2>
@@ -65,7 +65,7 @@
       </div>
     </section>
 
-    <section class="window w-features" id="features" aria-labelledby="features-title">
+    <section class="section w-features" id="features" aria-labelledby="features-title">
       <div class="pane">
         <h2 id="features-title">Everything you'd reach for on a Mac</h2>
         <div class="grid">
@@ -97,7 +97,7 @@
       </div>
     </section>
 
-    <section class="window w-install" id="install" aria-labelledby="install-title">
+    <section class="section w-install" id="install" aria-labelledby="install-title">
       <div class="pane">
         <div class="install-head">
           <h2 id="install-title">Install in a minute</h2>
@@ -149,7 +149,7 @@
       </div>
     </section>
 
-    <section class="window w-privacy" id="privacy" aria-labelledby="privacy-title">
+    <section class="section w-privacy" id="privacy" aria-labelledby="privacy-title">
       <div class="pane">
         <h2 id="privacy-title">Nobody is watching</h2>
         <p class="sub">WinDock runs entirely on your PC and changes nothing outside your own Windows account.</p>
@@ -165,11 +165,24 @@
   </main>
 
   <footer class="foot">
-    <p class="fine">WinDock is an independent project, not affiliated with or endorsed by Apple or Microsoft. Mac is a
-      trademark of Apple Inc. Windows is a trademark of Microsoft Corporation.
-      Source code under the <a href="https://github.com/Rhytam23/WinDock/blob/main/LICENSE">MIT licence</a>. The WinDock
-      name, logo, videos and images &copy; 2026 Rhytam Biswas, all rights reserved
-      (<a href="https://github.com/Rhytam23/WinDock/blob/main/NOTICE.md">details</a>).</p>
+    <div class="foot-top">
+      <a class="foot-brand" href="#top"><img src="media/apple-touch-icon.png" alt="" width="44" height="44">
+        <span><b>WinDock</b><small>A Mac-style dock for Windows&nbsp;11</small></span></a>
+      <a class="button small" href="https://github.com/Rhytam23/WinDock/releases/latest/download/WinDock-Setup.exe">Download for Windows</a>
+    </div>
+    <nav class="foot-links" aria-label="Project links">
+      <a href="https://github.com/Rhytam23/WinDock">Source code</a>
+      <a href="https://github.com/Rhytam23/WinDock/releases">Releases</a>
+      <a href="https://github.com/Rhytam23/WinDock/blob/main/CHANGELOG.md">What's new</a>
+      <a href="https://github.com/Rhytam23/WinDock/issues">Report a bug</a>
+      <a href="https://github.com/Rhytam23/WinDock/blob/main/LICENSE">MIT licence</a>
+    </nav>
+    <div class="foot-legal">
+      <p>&copy; 2026 Rhytam Biswas. The source code is MIT-licensed; the WinDock name, logo, videos and images are all
+        rights reserved (<a href="https://github.com/Rhytam23/WinDock/blob/main/NOTICE.md">details</a>).</p>
+      <p>WinDock is an independent project, not affiliated with or endorsed by Apple or Microsoft. Mac is a trademark of
+        Apple Inc. Windows is a trademark of Microsoft Corporation.</p>
+    </div>
   </footer>
 
   <!-- opening moment: a Windows-style taskbar slides away and the dock rises in its place -->
