@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="style.css">
   <script>document.documentElement.classList.add("js");</script>
   <script src="dock.js" defer></script>
+  <script src="stage.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -34,7 +35,13 @@
         <p class="fine">Version 0.1.0, 250&nbsp;KB, free and open source. No admin rights needed.<br>
           <a href="https://github.com/Rhytam23/WinDock/releases/latest">Portable zip and checksums</a></p>
       </div>
-      <p class="try rise" style="--d: 1.7s"><span class="try-mouse">Your taskbar just turned into the dock below. Glide over it.</span><span class="try-touch">The dock at the bottom of this page is the menu. Tap an icon.</span></p>
+      <div class="screen rise" id="screen" style="--d: 0.65s" role="img" aria-label="Animation: a cursor glides along WinDock's dock on a Windows 11 desktop. Icons magnify, Music bounces and opens a window, the window genies back into its icon, the Downloads folder fans open and two browser window previews appear.">
+        <div class="stage" aria-hidden="true">
+          <img class="st-wall" src="media/stage/wallpaper.webp" alt="" width="1600" height="900">
+          <canvas width="1600" height="900"></canvas>
+        </div>
+      </div>
+      <p class="try rise" style="--d: 1.7s"><span class="try-mouse">The dock at the bottom of this page works like WinDock too. Glide over it.</span><span class="try-touch">The dock at the bottom of this page is the menu. Tap an icon.</span></p>
     </section>
 
     <section class="window w-watch" id="watch" aria-labelledby="watch-title">

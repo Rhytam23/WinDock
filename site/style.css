@@ -73,6 +73,40 @@ h1 .line { display: inline-block; }
 .button:hover { color: #fff; background: var(--cobalt-dark); transform: translateY(-2px); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.35) inset, 0 20px 36px -12px rgba(47, 75, 255, 0.8); }
 .button:hover::after { transform: translateX(120%) skewX(-20deg); }
 .hero .fine { margin: 1rem 0 0; line-height: 1.55; }
+
+/* ---------- the animated desktop ---------- */
+.screen {
+  position: relative; width: min(1120px, 100%); aspect-ratio: 16 / 9; margin: 3.2rem auto 0;
+  border-radius: 18px; overflow: hidden; background: #0b1d55;
+  border: 9px solid #15172a;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.5), 0 50px 90px -40px rgba(20, 20, 90, 0.65), 0 18px 40px -20px rgba(20, 20, 90, 0.4);
+}
+.stage { --s: 0.7; position: absolute; left: 0; top: 0; width: 1600px; height: 900px; transform: scale(var(--s)); transform-origin: 0 0; text-align: left; }
+.stage > * { position: absolute; }
+.st-wall, .stage canvas { left: 0; top: 0; width: 1600px; height: 900px; }
+.st-bar { border-radius: 26px; background: rgba(255, 255, 255, 0.2); border: 1.5px solid rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(22px) saturate(1.5); -webkit-backdrop-filter: blur(22px) saturate(1.5); box-shadow: 0 20px 40px -12px rgba(0, 10, 50, 0.5); }
+.st-icon { display: block; }
+.st-div { width: 2px; background: rgba(255, 255, 255, 0.55); }
+.st-dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; }
+.st-label, .st-file span, .st-explorer, .st-previews figcaption { font: 600 26px/1.3 var(--font); color: #fff; white-space: nowrap; }
+.st-label { padding: 6px 16px; border-radius: 12px; background: rgba(20, 20, 40, 0.78); transform: translateX(-50%); transition: opacity 0.12s; }
+.st-file { display: flex; flex-direction: row-reverse; align-items: center; gap: 18px; transform-origin: 100% 50%; }
+.st-file img { width: 72px; height: 72px; }
+.st-file span { padding: 4px 14px; border-radius: 12px; background: rgba(20, 20, 40, 0.78); font-size: 24px; }
+.st-explorer { padding: 5px 16px; border-radius: 14px; background: rgba(255, 255, 255, 0.25); font-size: 22px; transform: translateX(-50%); }
+.st-previews { display: flex; gap: 18px; padding: 18px; border-radius: 22px; background: rgba(25, 28, 55, 0.72);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); transform-origin: 50% 100%; }
+.st-previews figure { margin: 0; }
+.st-previews figure:first-child img { outline: 4px solid #2f7bff; outline-offset: 2px; border-radius: 12px; }
+.st-previews figcaption { text-align: center; font-size: 22px; margin-top: 10px; }
+.st-caption { left: 800px; top: 44px; padding: 12px 28px; border-radius: 999px; background: rgba(255, 255, 255, 0.92); color: #17163a;
+  font: 700 34px/1.2 var(--display); letter-spacing: -0.01em; box-shadow: 0 16px 36px -14px rgba(0, 10, 60, 0.6); white-space: nowrap; }
+.st-cursor { filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.35)); }
+.stage.small .st-caption { font-size: 64px; padding: 18px 44px; top: 34px; }
+.stage.small .st-label { font-size: 44px; padding: 8px 22px; }
+.stage.small .st-cursor svg { width: 60px; height: 90px; }
+@media (max-width: 760px) { .screen { border-width: 5px; border-radius: 12px; margin-top: 2.2rem; } }
 .try { margin: 2.6rem 0 0; font-size: 0.95rem; color: var(--ink-2); }
 .try-touch { display: none; }
 @media (hover: none) { .try-mouse { display: none; } .try-touch { display: inline; } }
