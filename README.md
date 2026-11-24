@@ -52,7 +52,7 @@ Defender SmartScreen may warn about a new download. Choose **More info → Run a
 against `SHA256SUMS.txt` on the release page:
 
 ```powershell
-Get-FileHash .\WinDock-Setup-0.2.0.exe -Algorithm SHA256
+Get-FileHash .\WinDock-Setup-0.1.0.exe -Algorithm SHA256
 ```
 
 **Smart App Control:** if Smart App Control is turned on (Windows Security → App & browser control), Windows blocks
@@ -129,9 +129,9 @@ No SDK needed: the C# compiler that ships with Windows (.NET Framework 4.x) is e
 
 Every push is built and tested on a clean Windows machine by GitHub Actions (`.github/workflows/build.yml`): the
 installer is run silently, the install is checked, then it is uninstalled and checked again. Pushing a tag such as
-`v0.2.0` also publishes a GitHub Release with the files from `dist\`.
+`v0.1.0` also publishes a GitHub Release with the files from `dist\`.
 
-Setup also has a silent mode for scripted installs: `WinDock-Setup-0.2.0.exe /S [/noautostart] [/nostart]`.
+Setup also has a silent mode for scripted installs: `WinDock-Setup-0.1.0.exe /S [/noautostart] [/nostart]`.
 
 ## Privacy
 

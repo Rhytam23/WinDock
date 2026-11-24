@@ -9,8 +9,8 @@ using System.Windows.Forms;
 [assembly: System.Reflection.AssemblyProduct("WinDock")]
 [assembly: System.Reflection.AssemblyDescription("A dock and desktop shell for Windows")]
 [assembly: System.Reflection.AssemblyCopyright("MIT licence")]
-[assembly: System.Reflection.AssemblyVersion("0.2.0.0")]
-[assembly: System.Reflection.AssemblyFileVersion("0.2.0.0")]
+[assembly: System.Reflection.AssemblyVersion("0.1.0.0")]
+[assembly: System.Reflection.AssemblyFileVersion("0.1.0.0")]
 
 namespace WinDock
 {

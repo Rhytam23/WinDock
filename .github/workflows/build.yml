@@ -1,6 +1,6 @@
 # Builds WinDock on a clean Windows machine in GitHub's cloud, then tests the installer there:
 # silent install -> check files, shortcut, autostart and Installed-apps entry -> uninstall -> check they are gone.
-# A pushed tag like v0.2.0 also publishes a GitHub Release with the setup, the portable zip and checksums.
+# A pushed tag like v0.1.0 also publishes a GitHub Release with the setup, the portable zip and checksums.
 name: build
 
 on:

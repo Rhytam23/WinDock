@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0 — first public release
+## 0.1.0 — first public release
 
 **Dock**
 - Magnification, name labels, running dots; click to open (bounce) and to minimise / restore with a genie effect.
