@@ -37,7 +37,7 @@ q { quotes: "\201C" "\201D"; }
 
 /* ---------- wallpaper: three soft colour fields that drift ---------- */
 .wallpaper { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-.wallpaper i { position: absolute; width: 70vmax; height: 70vmax; border-radius: 50%; filter: blur(60px); opacity: 0.75; }
+.wallpaper i { position: absolute; width: 70vmax; height: 70vmax; border-radius: 50%; opacity: 0.75; will-change: transform; }
 .wallpaper i:nth-child(1) { left: -20vmax; top: -25vmax; background: radial-gradient(closest-side, #ffc9d6, transparent); animation: drift1 38s ease-in-out infinite alternate; }
 .wallpaper i:nth-child(2) { right: -25vmax; top: -10vmax; background: radial-gradient(closest-side, #c6d6ff, transparent); animation: drift2 46s ease-in-out infinite alternate; }
 .wallpaper i:nth-child(3) { left: 5vmax; bottom: -35vmax; background: radial-gradient(closest-side, #e2d0ff, transparent); animation: drift3 52s ease-in-out infinite alternate; }
@@ -206,7 +206,7 @@ p { margin: 0 0 1rem; max-width: 40em; }
 .mini-title img { border-radius: 6px; }
 .check { font-size: 0.72rem; color: var(--ink-2); padding-left: 1.2rem; position: relative; }
 .check::before { content: ""; position: absolute; left: 0; top: 2px; width: 11px; height: 11px; border-radius: 3px; background: var(--cobalt); }
-.go { justify-self: end; font-size: 0.75rem; font-weight: 700; color: #fff; background: var(--cobalt); padding: 0.25rem 0.8rem; border-radius: 6px; }
+.mini-install { justify-self: end; font-size: 0.75rem; font-weight: 700; color: #fff; background: var(--cobalt); padding: 0.25rem 0.8rem; border-radius: 6px; }
 .mini-dock { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; padding: 5px 7px; border-radius: 10px;
   background: rgba(255, 255, 255, 0.28); border: 1px solid rgba(255, 255, 255, 0.55); }
 .mini-dock i { width: 18px; height: 18px; border-radius: 5px; background: linear-gradient(#fff, #cfe0ff); }
@@ -240,7 +240,7 @@ p { margin: 0 0 1rem; max-width: 40em; }
   .w-install.open .tick { animation: tick 3.2s var(--spring) infinite; }
   .w-install.open .warn-btns .run::after { animation: ring 1.8s ease-out infinite; }
   .w-install.open .mini-dock { animation: rise 3.6s var(--spring) infinite; }
-  .w-install.open .go { animation: press 3.6s ease infinite; }
+  .w-install.open .mini-install { animation: press 3.6s ease infinite; }
 }
 @keyframes fill { 0% { transform: scaleX(0); } 55%, 100% { transform: scaleX(1); } }
 @keyframes tick { 0%, 55% { transform: scale(0); } 70%, 92% { transform: scale(1); } 100% { transform: scale(0); } }
@@ -316,8 +316,8 @@ html:not(.js) .taskbar { display: none; }
   .js.go .app img { animation: pop 0.55s var(--spring) both; animation-delay: calc(1.15s + var(--i) * 55ms); }
   @keyframes pop { from { transform: scale(0.3) translateY(30%); opacity: 0; } to { transform: none; opacity: 1; } }
 
-  .js h1 .line, .js .rise { opacity: 0; transform: translateY(28px); filter: blur(6px); transition: opacity 0.8s var(--out), transform 0.9s var(--out), filter 0.8s var(--out); }
-  .js.go h1 .line, .js.go .rise { opacity: 1; transform: none; filter: none; }
+  .js h1 .line, .js .rise { opacity: 0; transform: translateY(28px); transition: opacity 0.8s var(--out), transform 0.9s var(--out); }
+  .js.go h1 .line, .js.go .rise { opacity: 1; transform: none; }
   .js.go h1 .line:nth-child(2) { transition-delay: 0.12s; }
   .js.go .rise { transition-delay: var(--d, 0s); }
 
