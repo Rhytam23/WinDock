@@ -99,6 +99,28 @@
     });
   }
 
+  // ---------- auto-hide: the page dock steps aside while it would sit on top of the film's own dock ----------
+  if (dock && film) {
+    let peek = false, queued = false;
+    const update = () => {
+      queued = false;
+      const r = film.getBoundingClientRect(), d = dock.offsetHeight + 40, line = innerHeight - d;
+      const over = r.top < line && r.bottom > line - 10 && r.bottom < innerHeight + d * 2;
+      dock.classList.toggle("away", over);
+      dock.classList.toggle("peek", over && peek);
+    };
+    const later = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+    addEventListener("scroll", later, { passive: true });
+    addEventListener("resize", later);
+    addEventListener("pointermove", e => {
+      if (e.pointerType !== "mouse") return;
+      const near = e.clientY > innerHeight - (peek ? dock.offsetHeight + 40 : 24);
+      if (near !== peek) { peek = near; later(); }
+    }, { passive: true });
+    document.documentElement.addEventListener("mouseleave", () => { if (peek) { peek = false; later(); } });
+    update();
+  }
+
   // ---------- feature clips: play while visible; with reduced motion, show controls instead ----------
   const clips = document.querySelectorAll(".clip");
   if (reduce.matches) {
