@@ -194,7 +194,7 @@ p { margin: 0 0 1rem; max-width: 40em; }
 .warn b { display: block; font: 700 0.9rem/1.2 var(--display); margin-bottom: 0.45rem; }
 .warn .ln { display: block; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, 0.4); margin-bottom: 4px; }
 .warn .ln.short { width: 60%; }
-.more { display: inline-block; margin-top: 0.3rem; font-size: 0.74rem; text-decoration: underline; text-underline-offset: 2px; }
+.warn-more { display: inline-block; margin-top: 0.3rem; font-size: 0.74rem; text-decoration: underline; text-underline-offset: 2px; }
 .warn-btns { display: flex; gap: 0.4rem; justify-content: flex-end; margin-top: 0.45rem; }
 .warn-btns span { font-size: 0.72rem; padding: 0.22rem 0.6rem; border-radius: 5px; border: 1px solid rgba(255, 255, 255, 0.7); }
 .warn-btns .run { background: #fff; color: #144aa8; font-weight: 700; position: relative; }
