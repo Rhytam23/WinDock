@@ -113,7 +113,6 @@ p { margin: 0 0 1rem; max-width: 40em; }
 .watch-head { margin-bottom: 1.6rem; }
 .watch-head p { max-width: 46em; }
 .film { width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 10px; background: #0b1d55; box-shadow: 0 24px 50px -22px rgba(10, 20, 80, 0.6); }
-.portrait { margin: 1rem 0 0; }
 
 .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.25rem, 3vw, 2.25rem); margin: 1.75rem 0 2.25rem; }
 .feat { margin: 0; }

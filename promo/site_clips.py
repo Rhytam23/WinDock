@@ -1,7 +1,6 @@
 """Cuts the website's media from the rendered videos (run after render.py --wide and music.py):
 
   site/media/windock-wide.mp4   1920x1080 video with soundtrack (the "Watch" window)
-  site/media/windock-reel.mp4   1080x1920 Instagram version with soundtrack (download link)
   site/media/wide-poster.webp   poster frame for the wide video
   site/media/clip-*.mp4         4:3 silent loops for the feature tiles, with matching *.webp posters
 
@@ -52,7 +51,6 @@ for name, (t0, t1, (x, y, w, h)) in CLIPS.items():
 ff("-ss", "5.0", "-i", WIDE, "-frames:v", "1", "-vf", "scale=1280:-2:flags=lanczos", "-quality", "80",
    os.path.join(OUT, "wide-poster.webp"))
 shutil.copyfile(os.path.join(HERE, "WinDock-wide-music.mp4"), os.path.join(OUT, "windock-wide.mp4"))
-shutil.copyfile(os.path.join(HERE, "WinDock-reel-music.mp4"), os.path.join(OUT, "windock-reel.mp4"))
 for f in sorted(os.listdir(OUT)):
     p = os.path.join(OUT, f)
     if os.path.isfile(p):
