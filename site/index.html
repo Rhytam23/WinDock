@@ -94,15 +94,55 @@
     <section class="window w-install" id="install" aria-labelledby="install-title">
       <div class="titlebar" aria-hidden="true"><span>WinDock Setup</span><i class="ctl"></i></div>
       <div class="pane">
-        <h2 id="install-title">Install in a minute</h2>
-        <ol class="steps">
-          <li><a href="https://github.com/Rhytam23/WinDock/releases/latest/download/WinDock-Setup.exe">Download WinDock-Setup.exe</a> and open it.</li>
-          <li>If Windows says <q>Windows protected your PC</q>, choose <b>More info</b>, then <b>Run anyway</b>.
-            WinDock isn't code-signed yet, so SmartScreen doesn't recognise it.</li>
-          <li>Choose <b>Install</b>. The dock appears at the bottom of your screen.</li>
+        <div class="install-head">
+          <h2 id="install-title">Install in a minute</h2>
+          <p>Three steps, no admin rights, nothing to configure.</p>
+        </div>
+        <ol class="howto">
+          <li class="step">
+            <div class="art art-download" aria-hidden="true">
+              <div class="file">
+                <img src="media/favicon.png" alt="" width="40" height="40">
+                <div class="file-text"><b>WinDock-Setup.exe</b><span>250 KB</span><i class="bar"><i></i></i></div>
+                <span class="tick"></span>
+              </div>
+            </div>
+            <h3><span class="num">1</span>Download</h3>
+            <p>Get the installer and open it from your Downloads.</p>
+            <a class="button small" href="https://github.com/Rhytam23/WinDock/releases/latest/download/WinDock-Setup.exe">Download WinDock-Setup.exe</a>
+          </li>
+          <li class="step">
+            <div class="art art-smart" aria-hidden="true">
+              <div class="warn">
+                <b>Windows protected your PC</b>
+                <i class="ln"></i><i class="ln short"></i>
+                <span class="more">More info</span>
+                <div class="warn-btns"><span class="run">Run anyway</span><span>Don't run</span></div>
+              </div>
+            </div>
+            <h3><span class="num">2</span>Get past the warning</h3>
+            <p>If Windows says <q>Windows protected your PC</q>, choose <b>More info</b>, then <b>Run anyway</b>.
+              WinDock isn't code-signed yet, so SmartScreen doesn't recognise it.</p>
+          </li>
+          <li class="step">
+            <div class="art art-setup" aria-hidden="true">
+              <div class="mini-win">
+                <div class="mini-title"><img src="media/favicon.png" alt="" width="22" height="22"><b>WinDock 0.1.0</b></div>
+                <span class="check">Start when I sign in</span>
+                <span class="go">Install</span>
+              </div>
+              <div class="mini-dock"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            </div>
+            <h3><span class="num">3</span>Install</h3>
+            <p>Choose <b>Install</b>. The dock appears at the bottom of your screen and the taskbar steps aside.</p>
+          </li>
         </ol>
-        <p>Changed your mind? Uninstall it from <b>Settings &rsaquo; Apps &rsaquo; Installed apps</b> and your taskbar returns.</p>
-        <p class="fine">Smart App Control blocks every unsigned app, WinDock included. You'll find it under Windows Security &rsaquo; App &amp; browser control.</p>
+        <div class="notes">
+          <p class="note"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 14 4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Changed your mind? Uninstall it from <b>Settings &rsaquo; Apps &rsaquo; Installed apps</b> and your taskbar comes back.</span></p>
+          <p class="note"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 8v5M12 16.5v.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <span>Smart App Control blocks every unsigned app, WinDock included. You'll find it under <b>Windows Security &rsaquo; App &amp; browser control</b>.</span></p>
+        </div>
       </div>
     </section>
 
