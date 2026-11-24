@@ -353,3 +353,53 @@ html:not(.js) .taskbar { display: none; }
   .app, .app::before, .app::after, .button, .button::after, .clip { transition: none; }
   .app.bounce img { animation: none; }
 }
+
+/* ---------- dark mode: follows the system setting (Windows: Settings > Personalisation > Colours) ---------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --ink: #eceaff;
+    --ink-2: #aeacd2;
+    --cobalt: #3d5bff;
+    --cobalt-dark: #5671ff;
+    --link: #93a6ff;
+    --paper: rgba(26, 28, 50, 0.74);
+    --line: rgba(255, 255, 255, 0.09);
+  }
+  body { background: #0b0d1c; }
+  a { color: var(--link); }
+  a:hover { color: #b9c6ff; }
+  .button, .button:hover { color: #fff; }
+  .skip { color: #0b0d1c; }
+  :focus-visible { outline-color: var(--link); }
+
+  .wallpaper i { opacity: 0.5; }
+  .wallpaper i:nth-child(1) { background: radial-gradient(closest-side, #6a1f4f, transparent); }
+  .wallpaper i:nth-child(2) { background: radial-gradient(closest-side, #1c3590, transparent); }
+  .wallpaper i:nth-child(3) { background: radial-gradient(closest-side, #3c2483, transparent); }
+
+  .top-link { background: rgba(255, 255, 255, 0.06); }
+  .top-link:hover { color: var(--ink); background: rgba(255, 255, 255, 0.12); }
+  .lead { color: #d2d0f0; }
+  .screen { border-color: #05060f; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08), 0 50px 90px -40px rgba(0, 0, 0, 0.8), 0 18px 40px -20px rgba(0, 0, 0, 0.6); }
+
+  .window { border-color: rgba(255, 255, 255, 0.08); box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 40px 70px -30px rgba(0, 0, 0, 0.75); }
+  .more li { background: rgba(255, 255, 255, 0.06); color: #d2d0f0; }
+  .step { background: rgba(255, 255, 255, 0.04); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 18px 36px -24px rgba(0, 0, 0, 0.7); }
+  .step:hover { box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 26px 44px -24px rgba(0, 0, 0, 0.85); }
+  .note { background: rgba(255, 255, 255, 0.04); }
+  .note svg { color: var(--link); }
+
+  /* the little Windows UI in the install pictures switches to Windows' dark theme too */
+  .file, .mini-win { background: #2b2c3c; }
+  .bar { background: #444659; }
+
+  .taskbar { background: rgba(28, 29, 44, 0.85); border-top-color: rgba(255, 255, 255, 0.08); box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.4); }
+  .tb-search { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.1); color: #b4b3c8; }
+  .tb-search::before { border-color: #ddd; }
+  .tb-search::after { background: #ddd; }
+
+  .dock { background: rgba(40, 42, 66, 0.5); border-color: rgba(255, 255, 255, 0.14); box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), 0 18px 40px -12px rgba(0, 0, 0, 0.7); }
+  .divider { background: rgba(255, 255, 255, 0.2); }
+  .app::before { background: rgba(240, 240, 255, 0.92); color: #17163a; }
+}
