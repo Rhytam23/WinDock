@@ -41,6 +41,7 @@ copy /y Install.bat "%STAGE%\" >nul
 copy /y Uninstall.bat "%STAGE%\" >nul
 copy /y README.md "%STAGE%\" >nul
 copy /y LICENSE "%STAGE%\LICENSE.txt" >nul
+copy /y NOTICE.md "%STAGE%\" >nul
 rem (entries written one by one so they use "/" separators, which every unzip tool understands)
 powershell -NoProfile -Command "Add-Type -AssemblyName System.IO.Compression, System.IO.Compression.FileSystem; $root=(Resolve-Path 'obj\portable').Path; $zip=[IO.Compression.ZipFile]::Open((Join-Path (Resolve-Path dist).Path 'WinDock-%VER%-portable.zip'), 'Create'); Get-ChildItem $root -Recurse -File | ForEach-Object { $name=$_.FullName.Substring($root.Length+1).Replace('\','/'); [void][IO.Compression.ZipFileExtensions]::CreateEntryFromFile($zip, $_.FullName, $name, 'Optimal') }; $zip.Dispose()" || exit /b 1
 echo Built dist\WinDock-%VER%-portable.zip

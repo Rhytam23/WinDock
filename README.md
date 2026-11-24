@@ -140,7 +140,9 @@ No telemetry, no accounts.
 
 ## Licence
 
-MIT, see [LICENSE](LICENSE).
+The source code is MIT-licensed, see [LICENSE](LICENSE). The WinDock name, logo, videos and images are not covered
+by MIT and stay all rights reserved: forks are welcome under their own name and icon. [NOTICE.md](NOTICE.md) has the
+details.
 
 WinDock is an independent project. It is not affiliated with, endorsed by or connected to Apple Inc. or Microsoft
 Corporation. macOS is a trademark of Apple Inc.; Windows is a trademark of Microsoft Corporation.
