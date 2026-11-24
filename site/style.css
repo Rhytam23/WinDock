@@ -431,3 +431,7 @@ h2 { background: linear-gradient(100deg, #ffffff 30%, #b9c6ff); -webkit-backgrou
 .aside { margin: 0; font-size: 0.92rem; color: var(--ink-2); max-width: none; }
 @media (max-width: 1000px) { .pillars { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 480px) { .pillars { grid-template-columns: 1fr; } .facts li { font-size: 0.88rem; } }
+@media (max-width: 400px) { /* small phones: a smaller dock that still fits edge to edge */
+  .dock { --base: 32px; gap: 5px; padding: 6px 7px; border-radius: 15px; }
+  .app { border-radius: 9px; }
+}
