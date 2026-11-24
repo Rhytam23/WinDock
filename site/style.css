@@ -424,3 +424,7 @@ h2 { background: linear-gradient(100deg, #ffffff 30%, #b9c6ff); -webkit-backgrou
   .dock { --base: 32px; gap: 5px; padding: 6px 7px; border-radius: 15px; }
   .app { border-radius: 9px; }
 }
+
+/* no visible scrollbar: the page still scrolls with the wheel, touch, keyboard and the dock */
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
