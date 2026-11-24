@@ -8,9 +8,8 @@
   <meta property="og:title" content="WinDock: a Mac-style dock for Windows 11">
   <meta property="og:description" content="Free and open source. Magnification, genie minimise, window previews, folder stacks. No admin rights, no telemetry.">
   <meta property="og:image" content="https://rhytam23.github.io/WinDock/media/wide-poster.webp">
-  <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#eef2fd" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0b0d1c" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b0d1c">
   <link rel="icon" href="media/favicon.png">
   <link rel="apple-touch-icon" href="media/apple-touch-icon.png">
   <link rel="stylesheet" href="style.css?v=dev">
@@ -34,8 +33,13 @@
         open and stacks your folders. Quit it and your taskbar comes straight back.</p>
       <div class="rise" style="--d: 0.45s">
         <a class="button" href="https://github.com/Rhytam23/WinDock/releases/latest/download/WinDock-Setup.exe">Download for Windows</a>
-        <p class="fine">Version 0.1.0, 250&nbsp;KB, free and open source. No admin rights needed.<br>
-          <a href="https://github.com/Rhytam23/WinDock/releases/latest">Portable zip and checksums</a></p>
+        <ul class="facts">
+          <li><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 20V7M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Free and open source</li>
+          <li><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>No admin rights</li>
+          <li><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M21 3c-6 0-12 3-14 10l-3 8M7 13h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>250&nbsp;KB, 13&nbsp;MB of memory</li>
+          <li><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M9 14 4 9l5-5M4 9h10.5a5.5 5.5 0 0 1 0 11H11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Quit it and the taskbar returns</li>
+        </ul>
+        <p class="fine">Version 0.1.0 for Windows&nbsp;11. <a href="https://github.com/Rhytam23/WinDock/releases/latest">Portable zip and checksums</a></p>
       </div>
       <div class="screen rise" id="screen" style="--d: 0.65s" role="img" aria-label="Animation: a cursor glides along WinDock's dock on a Windows 11 desktop. Icons magnify, Music bounces and opens a window, the window genies back into its icon, the Downloads folder fans open and two browser window previews appear.">
         <div class="stage" aria-hidden="true">
@@ -68,19 +72,19 @@
         <div class="grid">
           <figure class="feat">
             <video class="clip" muted loop playsinline preload="none" poster="media/genie.webp?v=dev" width="960" height="720" aria-label="A music player window pouring into its dock icon"><source src="media/clip-genie.mp4?v=dev" type="video/mp4"></video>
-            <figcaption><b>Genie minimise.</b> Click a running app and its window pours into its icon. Click again to bring it back.</figcaption>
+            <figcaption><h3>Genie minimise</h3>Click a running app and its window pours into its icon. Click again to bring it back.</figcaption>
           </figure>
           <figure class="feat">
             <video class="clip" muted loop playsinline preload="none" poster="media/previews.webp?v=dev" width="960" height="720" aria-label="Live previews of two browser windows above the browser icon"><source src="media/clip-previews.mp4?v=dev" type="video/mp4"></video>
-            <figcaption><b>Window previews.</b> Rest on an app to see its windows live, then pick the one you want.</figcaption>
+            <figcaption><h3>Window previews</h3>Rest on an app to see its windows live, then pick the one you want.</figcaption>
           </figure>
           <figure class="feat">
             <video class="clip" muted loop playsinline preload="none" poster="media/stacks.webp?v=dev" width="960" height="720" aria-label="The Downloads folder opening as a fan, a grid and a list"><source src="media/clip-stacks.mp4?v=dev" type="video/mp4"></video>
-            <figcaption><b>Folder stacks.</b> Open a pinned folder as a fan, a grid or a list, and open any file in one click.</figcaption>
+            <figcaption><h3>Folder stacks</h3>Open a pinned folder as a fan, a grid or a list, and open any file in one click.</figcaption>
           </figure>
           <figure class="feat">
             <video class="clip" muted loop playsinline preload="none" poster="media/settings.webp?v=dev" width="960" height="720" aria-label="Dragging the size slider in WinDock Settings and switching to dark mode"><source src="media/clip-settings.mp4?v=dev" type="video/mp4"></video>
-            <figcaption><b>Live settings.</b> Drag the size slider and the dock grows as you drag. Dark mode follows at once.</figcaption>
+            <figcaption><h3>Live settings</h3>Drag the size slider and the dock grows as you drag. Dark mode follows at once.</figcaption>
           </figure>
         </div>
         <ul class="more">
@@ -149,10 +153,14 @@
     <section class="window w-privacy" id="privacy" aria-labelledby="privacy-title">
       <div class="pane">
         <h2 id="privacy-title">Nobody is watching</h2>
-        <p>No telemetry, no account, no ads. WinDock only goes online to fetch a website's icon when you pin that
-          website, and it changes nothing outside your own Windows account.</p>
-        <p>It's free, and its source code is open under the MIT licence. Read the code, report a bug or suggest an idea
-          <a href="https://github.com/Rhytam23/WinDock">on GitHub</a>.</p>
+        <p class="sub">WinDock runs entirely on your PC and changes nothing outside your own Windows account.</p>
+        <ul class="pillars">
+          <li><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c5.5 0 9.5 5 10 7-.2.8-1 2.2-2.3 3.6M6.6 6.6C4.3 8 2.6 10.3 2 12c.5 2 4.5 7 10 7 1.9 0 3.6-.6 5-1.4M9.9 9.9a3 3 0 0 0 4.2 4.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>No telemetry</h3><p>Nothing about you or your PC is collected or sent.</p></li>
+          <li><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM17 8l5 5M22 8l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>No account</h3><p>Install and go. There is nothing to sign up for.</p></li>
+          <li><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM4.9 4.9l14.2 14.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>No ads</h3><p>Free, with nothing to upgrade and nothing to sell.</p></li>
+          <li><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><h3>Open source</h3><p>The code is MIT-licensed. <a href="https://github.com/Rhytam23/WinDock">Read it on GitHub</a>.</p></li>
+        </ul>
+        <p class="aside">The only time it goes online is to fetch a website's icon when you pin that website to the dock.</p>
       </div>
     </section>
   </main>
