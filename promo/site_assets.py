@@ -1,6 +1,7 @@
-"""Exports the website's images from the promo renderer (everything is drawn in code).
+"""Exports the website's icons from the promo renderer (everything is drawn in code).
 
-  python site_assets.py   -> ../site/media/  (dock icons, feature stills, favicon, video poster)
+  python site_assets.py   -> ../site/media/  (dock icons, favicon)
+  python site_clips.py    -> ../site/media/  (videos, feature clips and posters)
 """
 import os
 from PIL import Image
@@ -14,17 +15,7 @@ A = R.Assets()
 for name, img in A.icons.items():
     img.resize((192, 192), Image.LANCZOS).save(os.path.join(OUT, "icons", name.lower() + ".png"), optimize=True)
 
-# feature stills: (time in the reel, crop box) - crops stay below the captions
-STILLS = {  # all 4:3, framed on the subject
-    "genie": (10.7, (0, 845, 1080, 1655)),
-    "previews": (14.5, (0, 1250, 600, 1700)),
-    "stacks": (18.2, (400, 1060, 1080, 1570)),
-    "settings": (29.0, (40, 420, 1040, 1170)),
-}
-for name, (t, box) in STILLS.items():
-    R.render(t, A).crop(box).save(os.path.join(OUT, name + ".webp"), quality=84, method=6)
-
-R.render(5.0, A).save(os.path.join(OUT, "reel-poster.webp"), quality=80, method=6)
+# feature clips, their posters and the videos come from site_clips.py
 
 # favicon from WinDock's own icon
 ico = os.path.join(os.path.dirname(OUT), "..", "obj", "windock.ico")

@@ -1,8 +1,9 @@
-"""Renders a 1080x1920 (9:16) Instagram Reel showing what WinDock can do today, entirely from code.
+"""Renders WinDock's promo video entirely from code, in two formats with the same timeline:
+a 1080x1920 (9:16) Instagram Reel, and with --wide a 1920x1080 (16:9) Windows desktop version.
 
 Usage:
-  python render.py --stills 5 10.7 14 17 18 19.2 21 23.5 27.5 29 32   # PNG frames to promo/stills
-  python render.py                                                     # full MP4 (needs imageio-ffmpeg)
+  python render.py [--wide] --stills 5 10.7 14 17 18 19.2 21 23.5 27.5 29 32   # PNG frames to promo/stills
+  python render.py [--wide]                                                     # full MP4 (needs imageio-ffmpeg)
 
 Scenes (seconds; 128 BPM, 1 bar = 1.875 s, 18 bars = 33.75 s):
   0.0  title, dock slides up          3.8  magnification
@@ -16,7 +17,8 @@ import math, os, sys
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-W, H, FPS = 1080, 1920, 30
+WIDE = "--wide" in sys.argv          # 1920x1080 desktop version (the default is the 1080x1920 Reel)
+W, H, FPS = (1920, 1080, 30) if WIDE else (1080, 1920, 30)
 DUR = 18 * 1.875
 HERE = os.path.dirname(os.path.abspath(__file__))
 FONTS = r"C:\Windows\Fonts"
@@ -30,17 +32,36 @@ def font(name, size):
     return ImageFont.load_default()
 
 
-F_TITLE = font("segoeuib.ttf", 150)
-F_SUB = font("seguisb.ttf", 50)
-F_CAP = font("segoeuib.ttf", 60)
-F_SEG = font("seguisb.ttf", 34)
-F_LABEL = font("seguisb.ttf", 30)
-F_FAN = font("seguisb.ttf", 30)
-F_SMALL = font("seguisb.ttf", 24)
-F_CHIP = font("seguisb.ttf", 40)
-F_SET = font("segoeui.ttf", 30)
-F_SETB = font("segoeuib.ttf", 44)
-F_WIN = font("seguisb.ttf", 26)
+def vfont(style, size, fallback="seguisb.ttf"):
+    """Segoe UI Variable (Windows 11's own typeface) at a named weight, e.g. "Bold Display"."""
+    try:
+        f = ImageFont.truetype(os.path.join(FONTS, "SegUIVar.ttf"), size)
+        f.set_variation_by_name(style)
+        return f
+    except Exception:
+        return font(fallback, size)
+
+
+F_TITLE = vfont("Bold Display", 150, "segoeuib.ttf")
+F_SUB = vfont("Semibold Display", 50)
+F_CAP = vfont("Bold Display", 60, "segoeuib.ttf")
+F_SEG = vfont("Semibold Text", 34)
+F_LABEL = vfont("Semibold Text", 30)
+F_FAN = vfont("Semibold Text", 30)
+F_SMALL = vfont("Semibold Text", 24)
+F_CHIP = vfont("Semibold Text", 40)
+F_SET = vfont("Regular", 30, "segoeui.ttf")
+F_SETB = vfont("Bold Display", 44, "segoeuib.ttf")
+F_WIN = vfont("Semibold Text", 26)
+F_TB = vfont("Regular", 22, "segoeui.ttf")
+
+# where things sit in each format
+if WIDE:
+    DOCK_BOTTOM, CAP_Y, SEG_Y, TITLE_Y, SUB_Y, FAN_STEP = 1040, 104, 168, 450, 575, 100
+    END_Y = (370, 495, 610, 92)
+else:
+    DOCK_BOTTOM, CAP_Y, SEG_Y, TITLE_Y, SUB_Y, FAN_STEP = 1640, 330, 400, 760, 890, 118
+    END_Y = (640, 770, 900, 110)
 
 # ---------------------------------------------------------------- easing / helpers
 
@@ -128,17 +149,74 @@ def soft_shadow(w, h, r, blur=22, alpha=120, off=14):
 # ---------------------------------------------------------------- wallpaper
 
 def make_wallpaper():
+    """An original Windows 11-style wallpaper: deep blue with a soft bloom of translucent petals."""
     yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
-    top, bot = np.array([38, 28, 92]), np.array([12, 18, 48])
-    g = (yy / H)[..., None]
-    img = top * (1 - g) + bot * g
-    for bx, by, r, col, s in [(180, 420, 620, (255, 94, 128), 0.85), (930, 760, 700, (255, 166, 64), 0.75),
-                              (300, 1350, 760, (76, 110, 255), 0.85), (980, 1650, 600, (170, 80, 255), 0.70),
-                              (560, 1000, 520, (255, 210, 120), 0.35)]:
-        d = np.exp(-(((xx - bx) ** 2 + (yy - by) ** 2) / (2 * (r * 0.55) ** 2)))[..., None] * s
-        img = img * (1 - d) + np.array(col) * d
-    img = np.clip(img + np.random.default_rng(7).normal(0, 2.0, (H, W, 1)), 0, 255).astype(np.uint8)
-    return Image.fromarray(img, "RGB").convert("RGBA")
+    g = np.clip(xx / W * 0.45 + yy / H * 0.55, 0, 1)[..., None]
+    img = np.array([6, 20, 66]) * (1 - g) + np.array([28, 86, 200]) * g
+    cx, cy = W * 0.56, H * 0.5
+    glow = np.exp(-(((xx - cx) ** 2 + (yy - cy) ** 2) / (2 * (min(W, H) * 0.32) ** 2)))[..., None]
+    img = img * (1 - glow * 0.55) + np.array([120, 180, 255]) * glow * 0.55
+    base = Image.fromarray(np.clip(img, 0, 255).astype(np.uint8), "RGB").convert("RGBA")
+
+    m = min(W, H)
+    pw, ph = int(m * 0.62), int(m * 0.24)
+    grad = np.linspace(0, 1, pw)[None, :, None]
+    col = (np.array([30, 110, 255]) * (1 - grad) + np.array([205, 235, 255]) * grad).astype(np.uint8)
+    petal_rgb = Image.fromarray(np.repeat(col, ph, 0), "RGB")
+    mask = Image.new("L", (pw, ph), 0)
+    ImageDraw.Draw(mask).ellipse((0, 0, pw - 1, ph - 1), fill=255)
+    fade = Image.fromarray((np.linspace(0.25, 1.0, pw)[None, :] * np.ones((ph, 1)) * 255).astype(np.uint8), "L")
+    mask = Image.fromarray((np.array(mask, np.float32) * np.array(fade, np.float32) / 255 * 0.62).astype(np.uint8), "L")
+    layer = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    for k in range(8):
+        p = petal_rgb.copy(); p.putalpha(mask)
+        canvas = Image.new("RGBA", (pw * 2, pw * 2), (0, 0, 0, 0))
+        canvas.paste(p, (pw, pw - ph // 2), p)            # petal grows out from the centre
+        canvas = canvas.rotate(-20 + k * 45 + (k % 2) * 8, resample=Image.BICUBIC, center=(pw, pw))
+        layer.alpha_composite(canvas, (int(cx - pw), int(cy - pw)))
+    layer = layer.filter(ImageFilter.GaussianBlur(m * 0.006))
+    base.alpha_composite(layer)
+    soft = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    ImageDraw.Draw(soft).ellipse((cx - m * 0.08, cy - m * 0.08, cx + m * 0.08, cy + m * 0.08), fill=(230, 245, 255, 150))
+    base.alpha_composite(soft.filter(ImageFilter.GaussianBlur(m * 0.05)))
+    arr = np.array(base).astype(np.float32)
+    arr[..., :3] += np.random.default_rng(7).normal(0, 1.6, (H, W, 1))
+    return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), "RGBA")
+
+
+def draw_taskbar(fr, A, t):
+    """A Windows 11-style taskbar (centred icons, search box, clock) that slides away as WinDock arrives."""
+    off = ease_in_out(prog(t, 1.0, 1.45))
+    if off >= 1:
+        return
+    th = 56 if WIDE else 66
+    y0 = int(H - th + off * (th + 12))
+    if y0 >= H - 1:
+        return
+    g = A.bg_blur.crop((0, y0, W, min(H, y0 + th)))
+    g = Image.blend(g, Image.new("RGBA", g.size, (232, 238, 250, 255)), 0.78)
+    fr.alpha_composite(g, (0, y0))
+    d = ImageDraw.Draw(fr)
+    d.line((0, y0, W, y0), fill=(255, 255, 255, 200), width=1)
+    s = int(th * 0.62)
+    names = ["Files", "Browser", "Mail", "Music", "Settings"]
+    search_w = int(th * 3.4)
+    total = search_w + 14 + len(names) * (s + 14)
+    x = W / 2 - total / 2
+    cy = y0 + th / 2
+    d.rounded_rectangle((x, cy - s / 2, x + search_w, cy + s / 2), s / 2, fill=(255, 255, 255, 235), outline=(200, 205, 220, 255))
+    r = s * 0.18
+    d.ellipse((x + s * 0.35 - r, cy - r - 2, x + s * 0.35 + r, cy + r - 2), outline=(60, 60, 70, 255), width=2)
+    d.line((x + s * 0.35 + r * 0.7, cy + r * 0.7 - 2, x + s * 0.35 + r * 1.5, cy + r * 1.5 - 2), fill=(60, 60, 70, 255), width=2)
+    d.text((x + s * 0.95, cy), "Search", font=F_TB, fill=(90, 90, 100, 255), anchor="lm")
+    x += search_w + 14
+    for n in names:
+        fr.alpha_composite(A.icon(n, s), (int(x), int(cy - s / 2)))
+        if n in ("Files", "Browser"):
+            d.rounded_rectangle((x + s / 2 - 6, cy + s / 2 + 3, x + s / 2 + 6, cy + s / 2 + 6), 2, fill=(70, 110, 230, 255))
+        x += s + 14
+    d.text((W - 24, cy - 11), "4:20 PM", font=F_TB, fill=(30, 30, 40, 255), anchor="rm")
+    d.text((W - 24, cy + 13), "11/24/2026", font=F_TB, fill=(30, 30, 40, 255), anchor="rm")
 
 # ---------------------------------------------------------------- icons (all original, drawn here)
 
@@ -296,7 +374,7 @@ def cursor_img():
 # ---------------------------------------------------------------- windows (original, generic look)
 
 MW, MH = 760, 500
-MX, MY = (W - MW) // 2, 720
+MX, MY = (W - MW) // 2, (230 if WIDE else 720)
 
 
 def win_controls(d, x_right, y, col):
@@ -351,7 +429,7 @@ def make_thumb(accent, title):
 # ---------------------------------------------------------------- Settings window
 
 SW, SH = 900, 700
-SX, SY = (W - SW) // 2, 470
+SX, SY = (W - SW) // 2, (200 if WIDE else 470)
 TRACK = (560, 850, 205)          # x0, x1, y  (relative)
 SEG = (300, 850, 420, 474)        # segmented control box
 BMIN, BMAX = 48, 90
@@ -423,7 +501,6 @@ ITEMS = [("Files", ic_files, True), ("Browser", ic_browser, True), ("Mail", ic_m
          ("|", None, False), ("Downloads", ic_downloads, False), ("Trash", ic_trash, False)]
 NAMES = [n for n, _, _ in ITEMS]
 GAP, PAD, MAXMAG = 12, 14, 1.75
-DOCK_BOTTOM = 1640
 
 FAN = [("Sunset.jpg", (255, 140, 60), "JPG", True), ("Invoice.pdf", (230, 60, 60), "PDF", False),
        ("Trip.mp4", (140, 80, 230), "MP4", False), ("Project.zip", (110, 116, 130), "ZIP", False),
@@ -507,13 +584,13 @@ Y_ICON = DOCK_BOTTOM - PAD - B0 / 2
 I = NAMES.index
 CAL_X = BC[I("Calendar")]
 KEYS = [
-    (3.4, 1000, 1220), (4.2, BC[0], Y_ICON), (6.4, BC[-1], Y_ICON), (7.1, BC[I("Music")], Y_ICON),
+    (3.4, W * 0.93, DOCK_BOTTOM - 420), (4.2, BC[0], Y_ICON), (6.4, BC[-1], Y_ICON), (7.1, BC[I("Music")], Y_ICON),
     (10.4, BC[I("Music")], Y_ICON), (12.5, BC[I("Music")], Y_ICON), (13.1, BC[I("Browser")], Y_ICON),
     (15.4, BC[I("Browser")], Y_ICON), (16.0, BC[I("Downloads")], Y_ICON), (19.9, BC[I("Downloads")], Y_ICON),
     (20.5, CAL_X, Y_ICON), (20.6, CAL_X, Y_ICON), (21.4, CAL_X - 40, Y_ICON - 300), (22.7, CAL_X - 40, Y_ICON - 300),
-    (23.2, 620, 1150), (24.2, 620, 1150), (24.8, 560, 1905), (25.7, 560, 1880),
+    (23.2, W * 0.57, DOCK_BOTTOM - 490), (24.2, W * 0.57, DOCK_BOTTOM - 490), (24.8, W * 0.52, H - 15), (25.7, W * 0.52, H - 40),
     (26.6, knob_x(V0), SY + TRACK[2]), (26.8, knob_x(V0), SY + TRACK[2]), (27.8, knob_x(V1), SY + TRACK[2]),
-    (28.4, SEG_DARK[0], SEG_DARK[1]), (29.5, SEG_DARK[0], SEG_DARK[1]), (30.1, 1010, 1300),
+    (28.4, SEG_DARK[0], SEG_DARK[1]), (29.5, SEG_DARK[0], SEG_DARK[1]), (30.1, W * 0.93, DOCK_BOTTOM - 340),
 ]
 CLICKS = [("Music", 7.25, 7.45), ("Music", 10.2, 10.35), ("Downloads", 16.05, 16.25), ("Calendar", 20.5, 20.6)]
 
@@ -569,13 +646,13 @@ def render(t, A):
     a = window(t, 0.25, 3.8, 0.6)
     if a > 0:
         rise = (1 - ease_out(prog(t, 0.25, 1.2))) * 60 - ease_in_out(prog(t, 3.2, 3.8)) * 40
-        center_text(fr, "WinDock", F_TITLE, 760, a, rise)
-        center_text(fr, "A Mac-style dock for Windows 11", F_SUB, 890, window(t, 0.7, 3.8, 0.6), rise)
+        center_text(fr, "WinDock", F_TITLE, TITLE_Y, a, rise)
+        center_text(fr, "A Mac-style dock for Windows 11", F_SUB, SUB_Y, window(t, 0.7, 3.8, 0.6), rise)
 
     for t0, t1, txt in CAPTIONS:
         ca = window(t, t0, t1, 0.4)
         if ca > 0:
-            center_text(fr, txt, F_CAP, 330, ca, (1 - ease_out(prog(t, t0, t0 + 0.4))) * 30)
+            center_text(fr, txt, F_CAP, CAP_Y, ca, (1 - ease_out(prog(t, t0, t0 + 0.4))) * 30)
     # stack mode indicator
     sa = window(t, 15.6, 19.9, 0.4)
     if sa > 0:
@@ -584,8 +661,9 @@ def render(t, A):
         for k, name in enumerate(["Fan", "Grid", "List"]):
             p = pill(name, F_SEG, (255, 255, 255, 235) if k == mode else (255, 255, 255, 50),
                      fg=(40, 30, 70) if k == mode else (255, 255, 255), padx=26, pady=4, radius=26)
-            paste(fr, p, x + k * 150 + 75 - p.width / 2, 400, sa)
+            paste(fr, p, x + k * 150 + 75 - p.width / 2, SEG_Y, sa)
 
+    draw_taskbar(fr, A, t)
     if t < 1.4:
         return finish_frame(fr, t)
 
@@ -695,7 +773,7 @@ def render(t, A):
             if kk <= 0:
                 continue
             e = ease_out(kk)
-            tx, ty = fx - 7 * k ** 1.6, fy - 30 - 118 * (k + 1)
+            tx, ty = fx - 7 * k ** 1.6, fy - 30 - FAN_STEP * (k + 1)
             x, y = lerp(fx, tx, e), lerp(fy - 30, ty, e)
             ic = A.icon(k, int(84 * lerp(0.4, 1.0, e)), docs=True).rotate(-1.6 * k * e, resample=Image.BICUBIC, expand=True)
             paste(fr, ic, x - ic.width / 2, y - ic.height / 2, e)
@@ -704,7 +782,7 @@ def render(t, A):
         ea = clamp(fo * 1.4 - 0.4)
         if ea > 0:
             p = pill("Open in Explorer  \u203a", F_FAN, (255, 255, 255, 60))
-            paste(fr, p, fx - 7 * 6 ** 1.6 - p.width / 2 - 20, fy - 30 - 118 * 7 + 10, ea)
+            paste(fr, p, fx - 7 * 6 ** 1.6 - p.width / 2 - 20, fy - 30 - FAN_STEP * 7 + 10, ea)
     for mode, (o0, o1, c0, c1) in (("grid", (17.55, 17.85, 18.45, 18.6)), ("list", (18.65, 18.95, 19.5, 19.75))):
         oa = ease_out(prog(t, o0, o1)) * (1 - ease_in_out(prog(t, c0, c1)))
         if oa <= 0:
@@ -777,8 +855,8 @@ def render(t, A):
     # end card
     ea = ease_out(prog(t, 30.2, 30.9))
     if ea > 0:
-        center_text(fr, "WinDock", F_TITLE, 640, ea, (1 - ea) * 40)
-        center_text(fr, "A Mac-style dock for Windows 11", F_SUB, 770, ease_out(prog(t, 30.4, 31.1)))
+        center_text(fr, "WinDock", F_TITLE, END_Y[0], ea, (1 - ea) * 40)
+        center_text(fr, "A Mac-style dock for Windows 11", F_SUB, END_Y[1], ease_out(prog(t, 30.4, 31.1)))
         for i, chip in enumerate(["No admin rights", "No telemetry", "Free & open source (MIT)"]):
             ca = ease_out(prog(t, 30.7 + i * 0.25, 31.3 + i * 0.25))
             if ca <= 0:
@@ -787,7 +865,7 @@ def render(t, A):
             p = Image.new("RGBA", (lab.width + 20, lab.height), (0, 0, 0, 0))
             ImageDraw.Draw(p).rounded_rectangle((0, 0, p.width - 1, p.height - 1), p.height // 2, fill=(255, 255, 255, 52), outline=(255, 255, 255, 120), width=2)
             p.alpha_composite(lab, (10, 0))
-            paste(fr, p, W / 2 - p.width / 2, 900 + i * 110 + (1 - ca) * 30, ca)
+            paste(fr, p, W / 2 - p.width / 2, END_Y[2] + i * END_Y[3] + (1 - ca) * 30, ca)
 
     return finish_frame(fr, t)
 
@@ -805,11 +883,11 @@ def main():
     if "--stills" in sys.argv:
         os.makedirs(os.path.join(HERE, "stills"), exist_ok=True)
         for s in sys.argv[sys.argv.index("--stills") + 1:]:
-            p = os.path.join(HERE, "stills", f"t{float(s):05.2f}.png")
+            p = os.path.join(HERE, "stills", ("wide-" if WIDE else "") + f"t{float(s):05.2f}.png")
             render(float(s), A).save(p); print(p)
         return
     import imageio_ffmpeg
-    path = os.path.join(HERE, "WinDock-reel.mp4")
+    path = os.path.join(HERE, "WinDock-wide.mp4" if WIDE else "WinDock-reel.mp4")
     n = int(round(DUR * FPS))
     wr = imageio_ffmpeg.write_frames(path, (W, H), fps=FPS, codec="libx264", pix_fmt_out="yuv420p",
                                      quality=None, bitrate=None, macro_block_size=8,

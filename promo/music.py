@@ -186,8 +186,11 @@ print(f"music.wav  {DUR:.2f}s  peak {20*np.log10(np.abs(stereo).max()):.1f} dBFS
 
 import imageio_ffmpeg
 ff = imageio_ffmpeg.get_ffmpeg_exe()
-src, out = os.path.join(HERE, "WinDock-reel.mp4"), os.path.join(HERE, "WinDock-reel-music.mp4")
+import sys
+name = "WinDock-wide" if "--wide" in sys.argv else "WinDock-reel"
+src, out = os.path.join(HERE, name + ".mp4"), os.path.join(HERE, name + "-music.mp4")
 subprocess.run([ff, "-hide_banner", "-loglevel", "error", "-y", "-i", src, "-i", wav,
                 "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-ar", "44100",
-                "-shortest", "-movflags", "+faststart", out], check=True)
+                "-shortest", "-movflags", "+faststart", out], check=True,
+               stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
 print(out)

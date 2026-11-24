@@ -7,15 +7,17 @@
   <meta name="description" content="WinDock replaces the Windows 11 taskbar with a Mac-style dock: magnification, genie minimise, window previews and folder stacks. Free, open source, no admin rights.">
   <meta property="og:title" content="WinDock: a Mac-style dock for Windows 11">
   <meta property="og:description" content="Free and open source. Magnification, genie minimise, window previews, folder stacks. No admin rights, no telemetry.">
-  <meta property="og:image" content="https://rhytam23.github.io/WinDock/media/reel-poster.webp">
-  <meta name="theme-color" content="#f3eefb">
+  <meta property="og:image" content="https://rhytam23.github.io/WinDock/media/wide-poster.webp">
+  <meta name="theme-color" content="#eef2fd">
   <link rel="icon" href="media/favicon.png">
   <link rel="apple-touch-icon" href="media/apple-touch-icon.png">
   <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.add("js");</script>
   <script src="dock.js" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
+  <div class="wallpaper" aria-hidden="true"><i></i><i></i><i></i></div>
 
   <header class="top" id="top">
     <a class="brand" href="#top"><img src="media/favicon.png" alt="" width="26" height="26"> WinDock</a>
@@ -24,27 +26,29 @@
 
   <main id="main">
     <section class="hero" aria-labelledby="hero-title">
-      <h1 id="hero-title">Give Windows&nbsp;11 <br>a&nbsp;dock.</h1>
-      <p class="lead">WinDock swaps the taskbar for a Mac-style dock that magnifies as you glide, bounces when apps open
-        and stacks your folders. Quit it and your taskbar comes straight back.</p>
-      <a class="button" href="https://github.com/Rhytam23/WinDock/releases/latest/download/WinDock-Setup.exe">Download for Windows</a>
-      <p class="fine">Version 0.1.0, 250&nbsp;KB, free and open source. No admin rights needed.<br>
-        <a href="https://github.com/Rhytam23/WinDock/releases/latest">Portable zip and checksums</a></p>
-      <p class="try"><span class="try-mouse">The dock at the bottom of this page works like WinDock. Glide over it.</span><span class="try-touch">The dock at the bottom of this page is the menu. Tap an icon.</span></p>
+      <h1 id="hero-title"><span class="line">Give Windows&nbsp;11</span> <span class="line">a&nbsp;dock.</span></h1>
+      <p class="lead rise" style="--d: 0.3s">WinDock swaps the taskbar for a Mac-style dock that magnifies as you glide, bounces when apps
+        open and stacks your folders. Quit it and your taskbar comes straight back.</p>
+      <div class="rise" style="--d: 0.45s">
+        <a class="button" href="https://github.com/Rhytam23/WinDock/releases/latest/download/WinDock-Setup.exe">Download for Windows</a>
+        <p class="fine">Version 0.1.0, 250&nbsp;KB, free and open source. No admin rights needed.<br>
+          <a href="https://github.com/Rhytam23/WinDock/releases/latest">Portable zip and checksums</a></p>
+      </div>
+      <p class="try rise" style="--d: 1.7s"><span class="try-mouse">Your taskbar just turned into the dock below. Glide over it.</span><span class="try-touch">The dock at the bottom of this page is the menu. Tap an icon.</span></p>
     </section>
 
     <section class="window w-watch" id="watch" aria-labelledby="watch-title">
       <div class="titlebar" aria-hidden="true"><span>WinDock in 34 seconds</span><i class="ctl"></i></div>
-      <div class="pane watch">
-        <video class="reel" controls playsinline preload="none" poster="media/reel-poster.webp" width="1080" height="1920" aria-describedby="watch-note">
-          <source src="media/windock-reel.mp4" type="video/mp4">
-        </video>
-        <div>
+      <div class="pane">
+        <div class="watch-head">
           <h2 id="watch-title">See all of it in half a minute</h2>
-          <p>Magnification, the genie, window previews, folder stacks, dragging an icon away, auto-hide and Settings,
-            set to its own soundtrack.</p>
-          <p class="fine" id="watch-note">An illustration drawn from code, not a screen recording.</p>
+          <p>Magnification, the genie, window previews, folder stacks, dragging an icon away, auto-hide and Settings, set
+            to its own soundtrack. <span class="fine" id="watch-note">An illustration drawn from code, not a screen recording.</span></p>
         </div>
+        <video class="film" controls playsinline preload="none" poster="media/wide-poster.webp" width="1920" height="1080" aria-describedby="watch-note">
+          <source src="media/windock-wide.mp4" type="video/mp4">
+        </video>
+        <p class="fine portrait">Making a post? Here's the <a href="media/windock-reel.mp4" download>vertical version for Instagram</a>.</p>
       </div>
     </section>
 
@@ -54,19 +58,19 @@
         <h2 id="features-title">Everything you'd reach for on a Mac</h2>
         <div class="grid">
           <figure class="feat">
-            <img src="media/genie.webp" alt="A music player window narrowing as it flows into its dock icon" width="1080" height="810" loading="lazy">
+            <video class="clip" muted loop playsinline preload="none" poster="media/genie.webp" width="960" height="720" aria-label="A music player window pouring into its dock icon"><source src="media/clip-genie.mp4" type="video/mp4"></video>
             <figcaption><b>Genie minimise.</b> Click a running app and its window pours into its icon. Click again to bring it back.</figcaption>
           </figure>
           <figure class="feat">
-            <img src="media/previews.webp" alt="Two browser window previews above the browser icon" width="600" height="450" loading="lazy">
+            <video class="clip" muted loop playsinline preload="none" poster="media/previews.webp" width="960" height="720" aria-label="Live previews of two browser windows above the browser icon"><source src="media/clip-previews.mp4" type="video/mp4"></video>
             <figcaption><b>Window previews.</b> Rest on an app to see its windows live, then pick the one you want.</figcaption>
           </figure>
           <figure class="feat">
-            <img src="media/stacks.webp" alt="The Downloads folder open as a grid of files above the dock" width="680" height="510" loading="lazy">
+            <video class="clip" muted loop playsinline preload="none" poster="media/stacks.webp" width="960" height="720" aria-label="The Downloads folder opening as a fan, a grid and a list"><source src="media/clip-stacks.mp4" type="video/mp4"></video>
             <figcaption><b>Folder stacks.</b> Open a pinned folder as a fan, a grid or a list, and open any file in one click.</figcaption>
           </figure>
           <figure class="feat">
-            <img src="media/settings.webp" alt="WinDock Settings in dark mode with the dock size slider" width="1000" height="750" loading="lazy">
+            <video class="clip" muted loop playsinline preload="none" poster="media/settings.webp" width="960" height="720" aria-label="Dragging the size slider in WinDock Settings and switching to dark mode"><source src="media/clip-settings.mp4" type="video/mp4"></video>
             <figcaption><b>Live settings.</b> Drag the size slider and the dock grows as you drag. Dark mode follows at once.</figcaption>
           </figure>
         </div>
@@ -113,6 +117,13 @@
       trademark of Apple Inc. Windows is a trademark of Microsoft Corporation.
       <a href="https://github.com/Rhytam23/WinDock/blob/main/LICENSE">MIT licence</a>.</p>
   </footer>
+
+  <!-- opening moment: a Windows-style taskbar slides away and the dock rises in its place -->
+  <div class="taskbar" aria-hidden="true">
+    <span class="tb-search">Search</span>
+    <img src="media/icons/files.png" alt=""><img src="media/icons/browser.png" alt=""><img src="media/icons/mail.png" alt=""><img src="media/icons/music.png" alt=""><img src="media/icons/settings.png" alt="">
+    <span class="tb-clock" id="clock"></span>
+  </div>
 
   <nav class="dock" id="dock" aria-label="Page sections">
     <a class="app" href="#top" data-name="Top" data-section="top"><img src="media/apple-touch-icon.png" alt=""></a>
